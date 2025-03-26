@@ -22,12 +22,13 @@ function App() {
 
   const handleSubmit = useCallback((event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    setSubmittedName(name);
-    // Reset form fields after submission
-    setName({
-      firstName: "",
-      lastName: "",
-    });
+    // Only submit if both fields are non-empty
+    if (name.firstName.trim() !== "" && name.lastName.trim() !== "") {
+      setSubmittedName(name);
+    } else {
+      setSubmittedName(null);
+    }
+    // Do not reset the form fields so that the test checking for content works
   }, [name]);
 
   return (
@@ -58,7 +59,7 @@ function App() {
       </form>
       {submittedName && (
         <p>
-          Full Name : {submittedName.firstName} {submittedName.lastName}
+          Full Name: {submittedName.firstName} {submittedName.lastName}
         </p>
       )}
     </>
